@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"kursach.chat.client"},{"l":"kursach.chat.server"},{"l":"kursach.network"}];updateSearchResults();
