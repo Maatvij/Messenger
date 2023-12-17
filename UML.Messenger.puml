@@ -1,0 +1,74 @@
+@startuml
+interface kursach.network.TCPConnectionListener {
+~ void onConnectionReady(TCPConnection)
+~ void onReceiveString(TCPConnection,String)
+~ void onDisconnect(TCPConnection)
+~ void onException(TCPConnection,Exception)
+}
+class kursach.network.TCPConnection {
+- Socket socket
+- Thread rxThread
+- TCPConnectionListener eventListener
+- BufferedReader in
+- BufferedWriter out
++ void sendString(String)
++ void disconnect()
++ String toString()
+}
+class kursach.chat.client.ClientWindow {
+- {static} String IP_ADDR
+- {static} int PORT
+- {static} int WIDTH
+- {static} int HEIGHT
+- JTextArea log
+- JTextField fieldInput
+- JLabel usernameLabel
+- TCPConnection connection
+- String username
++ {static} void main(String[])
++ void actionPerformed(ActionEvent)
++ void onConnectionReady(TCPConnection)
++ void onReceiveString(TCPConnection,String)
++ void onDisconnect(TCPConnection)
++ void onException(TCPConnection,Exception)
+- void printMsg(String)
+}
+class kursach.chat.client.LoginForm {
+- JLabel label1
+- JTextField usernameField
+- JButton loginButton
++ String getUsername()
++ JButton getLoginButton()
+}
+class Main {
++ {static} void main(String[])
+}
+class kursach.chat.server.ChatServer {
+- ArrayList<TCPConnection> connections
++ {static} void main(String[])
++ void onConnectionReady(TCPConnection)
++ void onReceiveString(TCPConnection,String)
++ void onDisconnect(TCPConnection)
++ void onException(TCPConnection,Exception)
+- void sendToAllConnections(String)
+}
+class kursach.chat.client.TextListListener {
++ void actionPerformed(ActionEvent)
+}
+class kursach.chat.server.Message {
+- String content
+}
+class kursach.chat.server.MessageDatabase {
++ void saveMessage(Message,String)
++ Message loadMessage(String)
+}
+
+
+java.awt.event.ActionListener <|.. kursach.chat.client.ClientWindow
+kursach.network.TCPConnectionListener <|.. kursach.chat.client.ClientWindow
+kursach.chat.client.JFrame <|-- kursach.chat.client.ClientWindow
+kursach.chat.client.JFrame <|-- kursach.chat.client.LoginForm
+kursach.network.TCPConnectionListener <|.. kursach.chat.server.ChatServer
+java.awt.event.ActionListener <|.. kursach.chat.client.TextListListener
+kursach.chat.server.Serializable <|.. kursach.chat.server.Message
+@enduml

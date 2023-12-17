@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class TCPConnection{
+| - socket: Socket
+| - input: BufferedReader
+| - output: BufferedWriter
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+| + TCPConnection(socket: Socket)
+| + send(message: String): void
+| + receive(): String
+| + close(): void
+}
+
+class ChatServer {
+| - serverSocket: ServerSocket
+| - clients: ArrayList
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+| + Server(port: int)
+| + start(): void
+| + broadcast(message: String): void
+}
+
+class ClientWindow {
+| - connection: TCPConnection
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+| + Client(ip: String, port: int)
+| + connect(): void
+| + send(message: String): void
+| + receive(): String
+| + close(): void
+}
+ChatServer <|- TCPConnection
+TCPConnection --|> ClientWindow
+
+
+@enduml
